@@ -63,7 +63,8 @@ const validateInput = (value) => {
     }
 };
 
-const questions =
+const Promptquestions = answers => {
+    return inquirer.prompt(
   //Array of questions for user to be returned
     [
         {
@@ -115,7 +116,7 @@ const questions =
             validate: validateInput
         },
 
-    ];
+    ])};
 
     //Seperate function for License and badges
     const askLicense = 
@@ -134,13 +135,18 @@ const questions =
         ]
     }];
     
-  //function to loop through array with return licensed input and check each object to see if is a match for data out put
-
- function licenseHandle (data){
+  //Function will cycle through badgeArr and return obj with matching name of license
+ function licenseHandle (data, version, badge){
+    inquirer.prompt(askLicense)
+    .then(data =>{
     let license = badgeArr.filter(x => x.name === data.License)
+// This returns the value of 'badge' on the returned object
     let badge = license.map(x => x.badge);
-     console.log(badge);
- }
+// This returns the value 'version' on the returned object
+    let version = license.map(x => x.version);
+     return (version, badge);
+     
+ })};
 
 
 
@@ -149,11 +155,10 @@ const questions =
 
 
 
-function runIt() {
-    inquirer.prompt(askLicense)
-    .then(data => {licenseHandle(data)});
+Promptquestions()
+    .then(answers => (console.log(answers)));
 
-};
+
     // .then(data => {const readMeMD = generateReadMe(data);
     // fs.writeFile('./readMe.md', readMeMD, err => {
     //     if (err) throw new Error(err);
@@ -163,7 +168,7 @@ function runIt() {
 
 
 
-runIt();
+//runIt();
 
 // const printReadMeData = (readMeDataArr) => {
 //     console.log(readMeDataArr);
