@@ -136,28 +136,22 @@ const Promptquestions = answers => {
     }];
     
   //Function will cycle through badgeArr and return obj with matching name of license
- function licenseHandle (data, version, badge){
-    inquirer.prompt(askLicense)
-    .then(data =>{
-    let license = badgeArr.filter(x => x.name === data.License)
+ function licenseHandle (){
+   return inquirer.prompt(askLicense).then(data =>{
+    let license = badgeArr.filter((x) => x.name === data.License);
 // This returns the value of 'badge' on the returned object
-    let badge = license.map(x => x.badge);
+    let badge = license.map((x) => x.badge);
 // This returns the value 'version' on the returned object
-    let version = license.map(x => x.version);
-     return (version, badge);
+    let version = license.map((x) => x.version);
+    let licenseObj = {name: version, icon: badge};
+     return licenseObj;
      
- })};
+ });}
 
-
-
-
-       
-
-
-
-Promptquestions()
-    .then(answers => (console.log(answers)));
-
+Promptquestions().then((answers) => {
+    console.log(answers);
+    licenseHandle().then((licenseObj) => console.log(licenseObj));
+});
 
     // .then(data => {const readMeMD = generateReadMe(data);
     // fs.writeFile('./readMe.md', readMeMD, err => {
