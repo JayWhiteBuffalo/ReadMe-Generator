@@ -81,16 +81,10 @@ const Promptquestions = answers => {
             validate: validateInput,
         },
         {
-            type: 'confirm',
-            message: "Would you like to include a Table of Contents?",
-            name: "Table of Contents",
-            validate: validateInput
-        },
-        {
             typer: "input",
             message: "What does the user need to install to run this app?",
             name: "Installation",
-            default : "No extra Installation is required"
+            default : "No Installation is required"
         },
         {
             type: "input",
@@ -115,6 +109,12 @@ const Promptquestions = answers => {
             message: 'What is your email address?',
             name: 'Email',
             validate: validateInput
+        },
+        {
+            type: 'input',
+            message: 'List the testing that has been done for the application.',
+            name: 'Tests',
+            default: ''
         },
 
     ])};
@@ -148,7 +148,7 @@ const Promptquestions = answers => {
      return licenseObj;
 //Take answers and data and pass them through generate then use that to write readMe file and throw errors if needed  
  }).then(data => {const readMeMD = generateReadMe(data, answers);
-    fs.writeFile('./readMe.md', readMeMD, err => {
+    fs.writeFile('README.md', readMeMD, err => {
          if (err) throw new Error(err);
          console.log(answers);})})};
 
