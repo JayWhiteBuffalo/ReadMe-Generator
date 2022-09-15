@@ -52,6 +52,7 @@ const badgeArr = [
     
 ]
 
+//Array deconstruction that I did not need in the end (-.-)
 const [Apache, Boost, BSD3, BSD2, GNU, MIT, ISC] = badgeArr;
 
 //validate user input
@@ -136,7 +137,7 @@ const Promptquestions = answers => {
     }];
     
   //Function will cycle through badgeArr and return obj with matching name of license
- function licenseHandle (){
+ function licenseHandle (answers){
    return inquirer.prompt(askLicense).then(data =>{
     let license = badgeArr.filter((x) => x.name === data.License);
 // This returns the value of 'badge' on the returned object
@@ -145,28 +146,14 @@ const Promptquestions = answers => {
     let version = license.map((x) => x.version);
     let licenseObj = {name: version, icon: badge};
      return licenseObj;
-     
- });}
+//Take answers and data and pass them through generate then use that to write readMe file and throw errors if needed  
+ }).then(data => {const readMeMD = generateReadMe(data, answers);
+    fs.writeFile('./readMe.md', readMeMD, err => {
+         if (err) throw new Error(err);
+         console.log(answers);})})};
 
-Promptquestions().then((answers) => {
-    console.log(answers);
-    licenseHandle().then((licenseObj) => console.log(licenseObj));
-});
+// This Starts the whole thing.
+Promptquestions().then(answers => {
+    licenseHandle(answers);})
 
-    // .then(data => {const readMeMD = generateReadMe(data);
-    // fs.writeFile('./readMe.md', readMeMD, err => {
-    //     if (err) throw new Error(err);
-    //     console.log('Read me created');
-    // })});
-
-
-
-
-//runIt();
-
-// const printReadMeData = (readMeDataArr) => {
-//     console.log(readMeDataArr);
-// };
-
-//printReadMeData(readMeDataArgs);
 

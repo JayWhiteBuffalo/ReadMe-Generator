@@ -10,14 +10,16 @@
 
 
 
-module.exports = templateData => {
+module.exports = (templateData, answerobj) => {
 
-    let {...data} = templateData;
+    let {name, icon} = templateData;
+    let {...answers} = answerobj;
     return `
-    # ${data.title}
-    https://github.com/${data.Github}/${data.title}
+    ${icon}
+    # ${answers.title}
+    https://github.com/${answers.Github}/${answers.title}
     # Description
-    ${data.description}
+    ${answers.description}
     # Table of Contents
     * [Installation](#installation)
     * [Usage](#usage)
@@ -27,14 +29,13 @@ module.exports = templateData => {
     # Installation
     The following necessary dependencies must be installed to run the application
     # Usage
-    In order to use this app, ${data.Usage}
+    In order to use this app, ${answers.Usage}
     # License
-    This project is licensed under the ${data.License} license.
-    
+    This project is licensed under the ${name} license.
     # Contributing
-    Contributors: ${data.Contributing}
+    Contributors: ${answers.Contributing}
     # Questions
-    If you have any questions, contact ${data.Email}
+    If you have any questions, contact ${answers.Email}
     `
 }
 
